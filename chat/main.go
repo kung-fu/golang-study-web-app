@@ -2,8 +2,10 @@ package main
 
 import (
 	"flag"
+	"github.com/kung-fu/golang-study-web-app/trace"
 	"log"
 	"net/http"
+	"os"
 	"path/filepath"
 	"sync"
 	"text/template"
@@ -31,6 +33,7 @@ func main() {
 	flag.Parse()
 
 	r := newRoom()
+	r.tracer = trace.New(os.Stdout)
 
 	// ルート
 	http.Handle("/", &templateHandler{fileName: "chat.html"})
