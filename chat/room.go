@@ -5,7 +5,6 @@ import (
 	"github.com/kung-fu/golang-study-web-app/trace"
 	"log"
 	"net/http"
-	"os"
 )
 
 type room struct {
@@ -27,7 +26,7 @@ func newRoom() *room {
 		join:    make(chan *client),
 		leave:   make(chan *client),
 		clients: make(map[*client]bool),
-		tracer:  trace.New(os.Stdout),
+		tracer:  trace.Off(),
 	}
 }
 
