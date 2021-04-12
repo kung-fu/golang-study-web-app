@@ -27,3 +27,12 @@ func (t *tracer) Trace(a ...interface{}) {
 	fmt.Fprint(t.out, a...)
 	fmt.Fprint(t.out, "\n")
 }
+
+type nilTracer struct{}
+
+func (t *nilTracer) Trace(a ...interface{}) {}
+
+// Off はTraceメソッドの呼び出しを無視するTracerを返します
+func Off() Tracer {
+	return &nilTracer{}
+}
