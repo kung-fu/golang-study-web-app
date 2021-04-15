@@ -33,7 +33,7 @@ func (t *templateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func loadEnv() {
 	err := godotenv.Load()
-	if err == nil {
+	if err != nil {
 		log.Fatal("failed to load .env file")
 	}
 }
