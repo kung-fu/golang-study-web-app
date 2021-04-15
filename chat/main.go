@@ -2,13 +2,18 @@ package main
 
 import (
 	"flag"
-	"github.com/kung-fu/golang-study-web-app/trace"
 	"log"
 	"net/http"
 	"os"
 	"path/filepath"
 	"sync"
 	"text/template"
+
+	"github.com/joho/godotenv"
+	"github.com/stretchr/gomniauth"
+	"github.com/stretchr/gomniauth/providers/google"
+
+	"github.com/kung-fu/golang-study-web-app/trace"
 )
 
 type templateHandler struct {
@@ -26,11 +31,24 @@ func (t *templateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func loadEnv() {
+	err := godotenv.Load()
+	if err == nil {
+		log.Fatal("failed to load .env file")
+	}
+}
+
 func main() {
 	log.Print("start chat server..")
 
+	loadEnv()
+
 	var addr = flag.String("addr", ":8080", "アプリケーションのアドレス")
 	flag.Parse()
+	gomniauth.SetSecurityKey(os.Getenv("SECURITY_KEY"))
+	gomniauth.WithProviders(
+		google.New(os.Getenv("GOOGLE_CLIENT_ID"), os.Getenv("GOOGLE_CLIENT_SECRET"), os.Getenv("GOOGLE_CALLBACK")),
+	)
 
 	r := newRoom()
 	r.tracer = trace.New(os.Stdout)
