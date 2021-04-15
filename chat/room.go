@@ -1,10 +1,12 @@
 package main
 
 import (
-	"github.com/gorilla/websocket"
-	"github.com/kung-fu/golang-study-web-app/trace"
 	"log"
 	"net/http"
+
+	"github.com/gorilla/websocket"
+
+	"github.com/kung-fu/golang-study-web-app/trace"
 )
 
 type room struct {
