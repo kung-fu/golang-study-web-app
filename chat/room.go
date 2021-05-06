@@ -1,11 +1,11 @@
 package main
 
 import (
-	"github.com/stretchr/objx"
 	"log"
 	"net/http"
 
 	"github.com/gorilla/websocket"
+	"github.com/stretchr/objx"
 
 	"github.com/kung-fu/golang-study-web-app/trace"
 )

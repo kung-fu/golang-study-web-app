@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"github.com/stretchr/objx"
 	"log"
 	"net/http"
 	"os"
@@ -13,6 +12,7 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/stretchr/gomniauth"
 	"github.com/stretchr/gomniauth/providers/google"
+	"github.com/stretchr/objx"
 
 	"github.com/kung-fu/golang-study-web-app/trace"
 )
