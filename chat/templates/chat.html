@@ -1,27 +1,37 @@
 <html lang="ja">
 <head>
     <title>チャット</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <style>
-        input {
-            display: block;
+        ul#messages {
+            list-style: none;
         }
 
-        ul {
-            list-style: none;
+        ul#messages li {
+            margin-bottom: 2px;
+        }
+
+        ul#messages li img {
+            margin-right: 10px;
         }
     </style>
 </head>
 <body>
-<ul id="messages"></ul>
-Websocketを使ったチャットアプリケーション
-<form id="chatBox">
-    {{.UserData.name}}:<br/>
-    <label>
-        <textarea></textarea>
-    </label>
-    <input type="submit" value="送信"/>
-    または <a href="/logout">サインアウト</a>
-</form>
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <ul id="messages"></ul>
+        </div>
+    </div>
+    <form id="chatBox" role="form">
+        <div class="form-group">
+            <label for="message">{{.UserData.name}}からメッセージを送信</label>
+            または <a href="/logout">サインアウト</a>
+            <textarea id="message" class="form-control"></textarea>
+        </div>
+        <input type="submit" value="送信" class="btn btn-default"/>
+    </form>
+</div>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>
@@ -47,14 +57,13 @@ Websocketを使ったチャットアプリケーション
                 // alert("接続が終了しました");
             }
             socket.onmessage = function (e) {
-                var msg = eval("(" + e.data + ")");
+                var msg = JSON.parse(e.data);
                 messages.append(
                     $("<li>").append(
-                        $("<img>").css({
+                        $("<img>").attr("title", msg.Name).css({
                             width: 50,
                             verticalAlign: "middle"
                         }).attr("src", msg.AvatarURL),
-                        $("<strong>").text(msg.Name + ": "),
                         $("<span>").text(msg.Message)
                     )
                 );
